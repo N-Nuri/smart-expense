@@ -1,9 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .database import engine
+from . import models
+
+# Tạo bảng tự động
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Smart Expense API", version="1.0.0")
 
-# Cho phép frontend gọi API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
